@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "es_product")
-public class Product implements Serializable{
+public class Product implements Serializable {
 
 	/**
 	 * 
@@ -23,11 +23,12 @@ public class Product implements Serializable{
 	@GeneratedValue
 	@Column(name = "es_pdct_id")
 	private int id;
+	@Column(name = "es_pdct_name")
+	private String name;
 	@Column(name = "es_pdct_description")
 	private String description;
 	@Column(name = "es_pdct_price")
 	private double price;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "es_pdct_main_photo")
 	private Photo mainPhoto;
@@ -48,10 +49,11 @@ public class Product implements Serializable{
 
 	}
 
-	public Product(String description, double price, Photo mainPhoto,
-			Photo additionalPhoto, Photo additionalPhoto2,
+	public Product(String name, String description, double price,
+			Photo mainPhoto, Photo additionalPhoto, Photo additionalPhoto2,
 			Photo additionalPhoto3, Photo additionalPhoto4) {
 		super();
+		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.mainPhoto = mainPhoto;
@@ -59,6 +61,14 @@ public class Product implements Serializable{
 		this.additionalPhoto2 = additionalPhoto2;
 		this.additionalPhoto3 = additionalPhoto3;
 		this.additionalPhoto4 = additionalPhoto4;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDescription() {
