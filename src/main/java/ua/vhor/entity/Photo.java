@@ -30,9 +30,6 @@ public class Photo implements Serializable{
 	@Column(name="es_phto_description")
 	private String description;
 	
-	/* @OneToMany(mappedBy = "mainPhoto")
-	Set<Product> product;
-*/
 	public Photo() {
 		
 	}

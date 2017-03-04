@@ -30,10 +30,7 @@ public class PersonController {
 	PersonInfoRepository personInfoRepository;
 
 	@RequestMapping("/getPersonByLogin")
-	public Person getPersonByLogin(
-			@RequestParam(value = "login"/*
-										 * , defaultValue = "World"
-										 */) String login) {
+	public Person getPersonByLogin(@RequestParam(value = "login") String login) {
 		logger.info("Executing method getPersonByLogin()");
 		Person person = null;
 		try {

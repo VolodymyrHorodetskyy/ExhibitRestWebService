@@ -44,7 +44,10 @@ public class Product implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "es_pdct_additional_photo_4")
 	private Photo additionalPhoto4;
-
+	@Column(name = "es_pdct_available")
+	private int available;
+	
+	
 	public Product() {
 
 	}
