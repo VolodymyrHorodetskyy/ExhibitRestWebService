@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ua.vhor.db.entity.Product;
 import ua.vhor.entity.Criteria;
-import ua.vhor.entity.Product;
+import ua.vhor.entity.GoodsPageInfo;
+import ua.vhor.helpers.GoodsPageHelper;
 import ua.vhor.repository.ProductRepository;
 
 @RestController
@@ -42,12 +44,14 @@ public class ProductController {
 		return products;
 	}
 
-	@RequestMapping("/getMinMaxPrice")
-	public Criteria getMinMaxPrice() {
+	@RequestMapping("/getGoodsInfo")
+	public GoodsPageInfo getMinMaxPrice() {
 		Double biggestPrice = productRepository.getGreatestPrice();
 		Double leastPrice = productRepository.getLeastPrice();
-		Criteria criteria = new Criteria(leastPrice, biggestPrice);
-		return criteria;
+		GoodsPageInfo goodsPageInfo = new GoodsPageHelper(new Criteria())
+				.getGoodPageInfo();
+
+		return goodsPageInfo;
 	}
 
 }

@@ -1,4 +1,4 @@
-package ua.vhor.entity;
+package ua.vhor.db.entity;
 
 import java.io.Serializable;
 

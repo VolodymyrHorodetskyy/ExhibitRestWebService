@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.vhor.entity.Person;
-import ua.vhor.entity.PersonInfo;
+import ua.vhor.db.entity.Person;
+import ua.vhor.db.entity.PersonInfo;
 import ua.vhor.repository.PersonInfoRepository;
 import ua.vhor.repository.PersonRepository;
 
