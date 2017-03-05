@@ -5,15 +5,16 @@ import ua.vhor.entity.GoodsPageInfo;
 
 public class GoodsPageHelper {
 
-	private GoodsPageHelper goodsPageHelper;
+	private Criteria criteria;
 
 	public GoodsPageHelper(Criteria criteria) {
 		super();
-		this.goodsPageHelper = goodsPageHelper;
+		this.criteria = criteria;
 	}
 
 	public GoodsPageInfo getGoodPageInfo() {
-		return new GoodsPageInfo();
+		return new GoodsPageInfo(criteria.getMinPrice(),
+				criteria.getMaxPrice(), 0, 0);
 	}
 
 }
