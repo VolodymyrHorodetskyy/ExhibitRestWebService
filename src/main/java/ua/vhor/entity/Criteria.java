@@ -8,20 +8,17 @@ public class Criteria implements Serializable {
 	private double minPrice;
 	private double maxPrice;
 	private String searchName;
+	private int categoryId;
 
 	public Criteria() {
-		
+
 	}
-	
-	
-	
+
 	public Criteria(double minPrice, double maxPrice) {
 		super();
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 	}
-
-
 
 	public double getMinPrice() {
 		return minPrice;
@@ -53,6 +50,14 @@ public class Criteria implements Serializable {
 
 	public void setSearchName(String searchName) {
 		this.searchName = searchName;
+	}
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
 }

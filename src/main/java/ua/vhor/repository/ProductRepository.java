@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import ua.vhor.db.entity.Category;
 import ua.vhor.db.entity.Product;
 
 public interface ProductRepository extends
@@ -18,13 +19,16 @@ public interface ProductRepository extends
 
 	public Page<Product> findAll(Pageable pageable);
 
-	public Page<Product> findByPriceBetween(double min, double max,
-			Pageable pageable);
+	public Page<Product> findByPriceBetweenAndCategoryId(double min,
+			double max, int categorId, Pageable pageable);
 
 	@Query(value = GET_BIGGEST_PRICE_QUERY, nativeQuery = true)
 	public Double getGreatestPrice();
 
 	@Query(value = GET_LEAST_PRICE_QUERY, nativeQuery = true)
 	public Double getLeastPrice();
+
+	public Page<Product> findByPriceBetween(double min, double max,
+			Pageable pageable);
 
 }

@@ -41,19 +41,24 @@ public class ProductController {
 			@RequestBody Criteria criteria) {
 		Pageable pageable = new PageRequest(criteria.getPage(),
 				amountOfCardOnPage);
-		List<Product> products = productRepository.findByPriceBetween(
-				criteria.getMinPrice(), criteria.getMaxPrice(), pageable)
-				.getContent();
+		List<Product> products = null;
+		if (criteria.getCategoryId() != 0) {
+			products = productRepository.findByPriceBetweenAndCategoryId(
+					criteria.getMinPrice(), criteria.getMaxPrice(),
+					criteria.getCategoryId(), pageable).getContent();
+		} else {
+			products = productRepository.findByPriceBetween(
+					criteria.getMinPrice(), criteria.getMaxPrice(), pageable)
+					.getContent();
+		}
 
 		return products;
 	}
 
 	@RequestMapping("/getGoodsInfo")
 	public GoodsPageInfo getGoodsInfo(@RequestBody Criteria criteria) {
-
 		GoodsPageInfo goodsPageInfo = new GoodsPageHelper(criteria)
 				.getGoodPageInfo();
-
 		return goodsPageInfo;
 	}
 

@@ -23,11 +23,6 @@ public class GoodsPageHelper {
 	}
 
 	public GoodsPageInfo getGoodPageInfo() {
-	/*	String[] categoryArray = new String[categories.size()];
-		for (int i = 0; i < categories.size(); i++) {
-			categoryArray[i] = categories.get(i).getName();
-		}
-		*/
 		return new GoodsPageInfo(criteria.getMinPrice(),
 				criteria.getMaxPrice(), 1, 0, categories);
 	}
