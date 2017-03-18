@@ -1,23 +1,35 @@
 package ua.vhor.entity;
 
-public class GoodsPageInfo {
+import java.io.Serializable;
+import java.util.List;
 
+import ua.vhor.db.entity.Category;
+
+public class GoodsPageInfo implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4582038185227602715L;
+	
 	private double minPrice;
 	private double maxPrice;
 	private int sliderStep;
 	private int generalAmountOfPages;
+	private List<Category> categories;
 
 	public GoodsPageInfo() {
 		super();
 	}
 
 	public GoodsPageInfo(double minPrice, double maxPrice, int sliderStep,
-			int generalAmountOfPages) {
+			int generalAmountOfPages, List<Category> categories) {
 		super();
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 		this.sliderStep = sliderStep;
 		this.generalAmountOfPages = generalAmountOfPages;
+		this.categories = categories;
 	}
 
 	public double getMinPrice() {
@@ -50,6 +62,14 @@ public class GoodsPageInfo {
 
 	public void setGeneralAmountOfPages(int generalAmountOfPages) {
 		this.generalAmountOfPages = generalAmountOfPages;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 }
