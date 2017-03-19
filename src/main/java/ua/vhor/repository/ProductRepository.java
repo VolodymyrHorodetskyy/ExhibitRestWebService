@@ -16,6 +16,10 @@ public interface ProductRepository extends
 
 	static final String GET_BIGGEST_PRICE_QUERY = "SELECT MAX(p.es_pdct_price) FROM es_product p where es_pdct_available = 1";
 	static final String GET_LEAST_PRICE_QUERY = "SELECT MIN(p.es_pdct_price) FROM es_product p where es_pdct_available = 1";
+	static final String GET_BIGGEST_PRICE_QUERY_BY_NAME_AND_CATEGORY = "SELECT MAX(p.es_pdct_price) FROM es_product p where es_pdct_available = 1 and es_pdct_category =?1 and es_pdct_name like %?2%";
+	static final String GET_LEAST_PRICE_QUERY_BY_NAME_AND_CATEGORY = "SELECT MIN(p.es_pdct_price) FROM es_product p where es_pdct_available = 1 and es_pdct_category =?1 and es_pdct_name like %?2%";
+	static final String GET_BIGGEST_PRICE_QUERY_BY_NAME = "SELECT MAX(p.es_pdct_price) FROM es_product p where es_pdct_available = 1 and es_pdct_name like %?1%";
+	static final String GET_LEAST_PRICE_QUERY_BY_NAME = "SELECT MIN(p.es_pdct_price) FROM es_product p where es_pdct_available = 1 and es_pdct_name like %?1%";
 
 	public Page<Product> findAll(Pageable pageable);
 
@@ -28,7 +32,18 @@ public interface ProductRepository extends
 	@Query(value = GET_LEAST_PRICE_QUERY, nativeQuery = true)
 	public Double getLeastPrice();
 
-	public Page<Product> findByPriceBetween(double min, double max,
-			Pageable pageable);
+	Page<Product> findByPriceBetween(double min, double max, Pageable pageable);
+
+	@Query(value = GET_LEAST_PRICE_QUERY_BY_NAME_AND_CATEGORY, nativeQuery = true)
+	public Double getLeastPriceByNameAndCategory(int productId, String name);
+
+	@Query(value = GET_BIGGEST_PRICE_QUERY_BY_NAME_AND_CATEGORY, nativeQuery = true)
+	public Double getGreatestPriceByNameAndCategory(int productId, String name);
+
+	@Query(value = GET_LEAST_PRICE_QUERY_BY_NAME, nativeQuery = true)
+	public Double getLeastPriceByName(String name);
+
+	@Query(value = GET_BIGGEST_PRICE_QUERY_BY_NAME, nativeQuery = true)
+	public Double getGreatestPriceByName(String name);
 
 }

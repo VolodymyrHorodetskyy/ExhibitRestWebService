@@ -57,8 +57,22 @@ public class ProductController {
 
 	@RequestMapping("/getGoodsInfo")
 	public GoodsPageInfo getGoodsInfo(@RequestBody Criteria criteria) {
-		GoodsPageInfo goodsPageInfo = new GoodsPageHelper(criteria)
-				.getGoodPageInfo();
+		double minPrice = 0;
+		double maxPrice = 0;
+		if (criteria.getCategoryId() != 0) {
+			minPrice = productRepository.getLeastPriceByNameAndCategory(
+					criteria.getCategoryId(), criteria.getSearchName());
+			maxPrice = productRepository.getGreatestPriceByNameAndCategory(
+					criteria.getCategoryId(), criteria.getSearchName());
+		} else {
+			minPrice = productRepository.getLeastPriceByName(criteria
+					.getSearchName());
+			maxPrice = productRepository.getGreatestPriceByName(criteria
+					.getSearchName());
+		}
+		List<Category> categories = categoryRepository.findByAvailable(1);
+		GoodsPageInfo goodsPageInfo = new GoodsPageHelper(minPrice, maxPrice,
+				categories).getGoodPageInfo();
 		return goodsPageInfo;
 	}
 
