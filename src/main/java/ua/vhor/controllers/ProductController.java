@@ -57,8 +57,8 @@ public class ProductController {
 
 	@RequestMapping("/getGoodsInfo")
 	public GoodsPageInfo getGoodsInfo(@RequestBody Criteria criteria) {
-		double minPrice = 0;
-		double maxPrice = 0;
+		Double minPrice = null;
+		Double maxPrice = null;
 		if (criteria.getCategoryId() != 0) {
 			minPrice = productRepository.getLeastPriceByNameAndCategory(
 					criteria.getCategoryId(), criteria.getSearchName());

@@ -27,9 +27,13 @@ public class GoodsPageHelper {
 				criteria.getMaxPrice(), 1, 0, categories);
 	}
 
-	public GoodsPageHelper(double minPrice, double maxPrice,
+	public GoodsPageHelper(Double minPrice, Double maxPrice,
 			List<Category> categories) {
 		super();
+		if (minPrice == null || maxPrice == null) {
+			minPrice = 0.0;
+			maxPrice = 100.0;
+		}
 		this.criteria = new Criteria(minPrice, maxPrice);
 		this.categories = categories;
 	}
