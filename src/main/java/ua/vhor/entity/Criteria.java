@@ -8,7 +8,8 @@ public class Criteria implements Serializable {
 	private double minPrice;
 	private double maxPrice;
 	private String searchName;
-	private int categoryId;
+	private Integer categoryId;
+	private String action;
 
 	public Criteria() {
 
@@ -58,6 +59,14 @@ public class Criteria implements Serializable {
 
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 }

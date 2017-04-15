@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,41 +16,43 @@ import ua.vhor.entity.GoodsPageInfo;
 import ua.vhor.helpers.GoodsPageHelper;
 import ua.vhor.repository.CategoryRepository;
 import ua.vhor.repository.ProductRepository;
+import ua.vhor.utils.ParametersProvider;
 
 @RestController
 public class ProductController {
 
-	private final int amountOfCardOnPage = 10;
+	private final int amountOfCardOnPage = Integer.parseInt(ParametersProvider
+			.getProperty("pagination.amountcardsonpage"));
 
 	@Autowired
 	ProductRepository productRepository;
 	@Autowired
 	CategoryRepository categoryRepository;
 
-	@RequestMapping("/getAllProducts")
-	public List<Product> getAllProducts() {
-		Pageable pageable = new PageRequest(0, amountOfCardOnPage);
-		List<Product> products = productRepository.findAll(pageable)
-				.getContent();
-		return products;
-	}
-
 	@RequestMapping("/getProductsToCriteria")
 	public List<Product> getProductAccordingCriteria(
 			@RequestBody Criteria criteria) {
-		Pageable pageable = new PageRequest(criteria.getPage(),
-				amountOfCardOnPage);
 		List<Product> products = null;
-		if (criteria.getCategoryId() != 0) {
+		if (criteria.getAction().equalsIgnoreCase("category")) {
+			if (criteria.getCategoryId() != 0) {
+				products = productRepository.findByPriceBetweenAndCategoryId(
+						null, null, criteria.getCategoryId(),
+						criteria.getPage(), amountOfCardOnPage);
+			} else {
+				products = productRepository.findByPriceBetweenAndCategoryId(
+						null, null, null, criteria.getPage(),
+						amountOfCardOnPage);
+			}
+		} else if (criteria.getCategoryId() != 0) {
 			products = productRepository.findByPriceBetweenAndCategoryId(
 					criteria.getMinPrice(), criteria.getMaxPrice(),
-					criteria.getCategoryId(), pageable).getContent();
+					criteria.getCategoryId(), criteria.getPage(),
+					amountOfCardOnPage);
 		} else {
-			products = productRepository.findByPriceBetween(
-					criteria.getMinPrice(), criteria.getMaxPrice(), pageable)
-					.getContent();
+			products = productRepository.findByPriceBetweenAndCategoryId(
+					criteria.getMinPrice(), criteria.getMaxPrice(), null,
+					criteria.getPage(), amountOfCardOnPage);
 		}
-
 		return products;
 	}
 
@@ -65,10 +66,10 @@ public class ProductController {
 			maxPrice = productRepository.getGreatestPriceByNameAndCategory(
 					criteria.getCategoryId(), criteria.getSearchName());
 		} else {
-			minPrice = productRepository.getLeastPriceByName(criteria
-					.getSearchName());
-			maxPrice = productRepository.getGreatestPriceByName(criteria
-					.getSearchName());
+			minPrice = productRepository.getLeastPriceByNameAndCategory(null,
+					criteria.getSearchName());
+			maxPrice = productRepository.getGreatestPriceByNameAndCategory(
+					null, criteria.getSearchName());
 		}
 		List<Category> categories = categoryRepository.findByAvailable(1);
 		GoodsPageInfo goodsPageInfo = new GoodsPageHelper(minPrice, maxPrice,
@@ -78,8 +79,10 @@ public class ProductController {
 
 	@RequestMapping(value = "/getGoodsInfoForFirstRequest")
 	public GoodsPageInfo getGoodsInfoForFirstRequest() {
-		double minPrice = productRepository.getLeastPrice();
-		double maxPrice = productRepository.getGreatestPrice();
+		double minPrice = productRepository.getLeastPriceByNameAndCategory(
+				null, null);
+		double maxPrice = productRepository.getGreatestPriceByNameAndCategory(
+				null, null);
 		List<Category> categories = categoryRepository.findByAvailable(1);
 
 		GoodsPageInfo goodsPageInfo = new GoodsPageHelper(minPrice, maxPrice,
