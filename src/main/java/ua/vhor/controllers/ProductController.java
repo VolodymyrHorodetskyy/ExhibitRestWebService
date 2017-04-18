@@ -3,8 +3,6 @@ package ua.vhor.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,21 +35,23 @@ public class ProductController {
 			if (criteria.getCategoryId() != 0) {
 				products = productRepository.findByPriceBetweenAndCategoryId(
 						null, null, criteria.getCategoryId(),
-						criteria.getPage(), amountOfCardOnPage);
+						criteria.getSearchName(), criteria.getPage(),
+						amountOfCardOnPage);
 			} else {
 				products = productRepository.findByPriceBetweenAndCategoryId(
-						null, null, null, criteria.getPage(),
-						amountOfCardOnPage);
+						null, null, null, criteria.getSearchName(),
+						criteria.getPage(), amountOfCardOnPage);
 			}
 		} else if (criteria.getCategoryId() != 0) {
 			products = productRepository.findByPriceBetweenAndCategoryId(
 					criteria.getMinPrice(), criteria.getMaxPrice(),
-					criteria.getCategoryId(), criteria.getPage(),
-					amountOfCardOnPage);
+					criteria.getCategoryId(), criteria.getSearchName(),
+					criteria.getPage(), amountOfCardOnPage);
 		} else {
 			products = productRepository.findByPriceBetweenAndCategoryId(
 					criteria.getMinPrice(), criteria.getMaxPrice(), null,
-					criteria.getPage(), amountOfCardOnPage);
+					criteria.getSearchName(), criteria.getPage(),
+					amountOfCardOnPage);
 		}
 		return products;
 	}
