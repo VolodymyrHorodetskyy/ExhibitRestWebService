@@ -14,6 +14,7 @@ import ua.vhor.entity.GoodsPageInfo;
 import ua.vhor.helpers.GoodsPageHelper;
 import ua.vhor.repository.CategoryRepository;
 import ua.vhor.repository.ProductRepository;
+import ua.vhor.services.ProductService;
 import ua.vhor.utils.ParametersProvider;
 
 @RestController
@@ -23,36 +24,18 @@ public class ProductController {
 			.getProperty("pagination.amountcardsonpage"));
 
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 	@Autowired
-	CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
+	@Autowired
+	private ProductService productService;
 
 	@RequestMapping("/getProductsToCriteria")
 	public List<Product> getProductAccordingCriteria(
 			@RequestBody Criteria criteria) {
 		List<Product> products = null;
-		if (criteria.getAction().equalsIgnoreCase("category")) {
-			if (criteria.getCategoryId() != 0) {
-				products = productRepository.findByPriceBetweenAndCategoryId(
-						null, null, criteria.getCategoryId(),
-						criteria.getSearchName(), criteria.getPage(),
-						amountOfCardOnPage);
-			} else {
-				products = productRepository.findByPriceBetweenAndCategoryId(
-						null, null, null, criteria.getSearchName(),
-						criteria.getPage(), amountOfCardOnPage);
-			}
-		} else if (criteria.getCategoryId() != 0) {
-			products = productRepository.findByPriceBetweenAndCategoryId(
-					criteria.getMinPrice(), criteria.getMaxPrice(),
-					criteria.getCategoryId(), criteria.getSearchName(),
-					criteria.getPage(), amountOfCardOnPage);
-		} else {
-			products = productRepository.findByPriceBetweenAndCategoryId(
-					criteria.getMinPrice(), criteria.getMaxPrice(), null,
-					criteria.getSearchName(), criteria.getPage(),
-					amountOfCardOnPage);
-		}
+		products = productService.getProductsAccordingToCriteria(criteria,
+				amountOfCardOnPage);
 		return products;
 	}
 
