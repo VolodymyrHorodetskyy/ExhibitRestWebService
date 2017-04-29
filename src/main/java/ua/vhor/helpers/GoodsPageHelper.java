@@ -2,17 +2,11 @@ package ua.vhor.helpers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import ua.vhor.db.entity.Category;
 import ua.vhor.entity.Criteria;
 import ua.vhor.entity.GoodsPageInfo;
-import ua.vhor.repository.ProductRepository;
 
 public class GoodsPageHelper {
-
-	@Autowired
-	ProductRepository productRepository;
 
 	private Criteria criteria;
 	private List<Category> categories;
