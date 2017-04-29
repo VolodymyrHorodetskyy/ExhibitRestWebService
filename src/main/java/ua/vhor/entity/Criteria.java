@@ -9,6 +9,7 @@ public class Criteria implements Serializable {
 	private double maxPrice;
 	private String searchName;
 	private Integer categoryId;
+	private String orderBy;
 	private String action;
 
 	public Criteria() {
@@ -67,6 +68,14 @@ public class Criteria implements Serializable {
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+
+	public String getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
 	}
 
 }
