@@ -26,5 +26,4 @@ public class ParametersProvider {
 		}
 		return property;
 	};
-
 }

@@ -20,9 +20,7 @@ import ua.vhor.utils.ParametersProvider;
 @RestController
 public class ProductController {
 
-	private final int amountOfCardOnPage = Integer.parseInt(ParametersProvider
-			.getProperty("pagination.amountcardsonpage"));
-
+	
 	@Autowired
 	private ProductRepository productRepository;
 	@Autowired
@@ -34,8 +32,7 @@ public class ProductController {
 	public List<Product> getProductAccordingCriteria(
 			@RequestBody Criteria criteria) {
 		List<Product> products = null;
-		products = productService.getProductsAccordingToCriteria(criteria,
-				amountOfCardOnPage);
+		products = productService.getProductsAccordingToCriteria(criteria);
 		return products;
 	}
 
