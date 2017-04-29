@@ -12,6 +12,7 @@ import ua.vhor.db.entity.Product;
 import ua.vhor.entity.Criteria;
 import ua.vhor.entity.GoodsPageInfo;
 import ua.vhor.helpers.GoodsPageHelper;
+import ua.vhor.helpers.OrderByHelper;
 import ua.vhor.repository.CategoryRepository;
 import ua.vhor.repository.ProductRepository;
 import ua.vhor.services.ProductService;
@@ -20,7 +21,6 @@ import ua.vhor.utils.ParametersProvider;
 @RestController
 public class ProductController {
 
-	
 	@Autowired
 	private ProductRepository productRepository;
 	@Autowired
@@ -54,6 +54,7 @@ public class ProductController {
 		List<Category> categories = categoryRepository.findByAvailable(1);
 		GoodsPageInfo goodsPageInfo = new GoodsPageHelper(minPrice, maxPrice,
 				categories).getGoodPageInfo();
+		goodsPageInfo.setSortByValues(OrderByHelper.LIST_ORDER_BY);
 		return goodsPageInfo;
 	}
 
@@ -67,6 +68,7 @@ public class ProductController {
 
 		GoodsPageInfo goodsPageInfo = new GoodsPageHelper(minPrice, maxPrice,
 				categories).getGoodPageInfo();
+		goodsPageInfo.setSortByValues(OrderByHelper.LIST_ORDER_BY);
 		return goodsPageInfo;
 	}
 }

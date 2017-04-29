@@ -11,12 +11,13 @@ public class GoodsPageInfo implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 4582038185227602715L;
-	
+
 	private double minPrice;
 	private double maxPrice;
 	private int sliderStep;
 	private int generalAmountOfPages;
 	private List<Category> categories;
+	private List<String> sortByValues;
 
 	public GoodsPageInfo() {
 		super();
@@ -30,6 +31,18 @@ public class GoodsPageInfo implements Serializable {
 		this.sliderStep = sliderStep;
 		this.generalAmountOfPages = generalAmountOfPages;
 		this.categories = categories;
+	}
+
+	public GoodsPageInfo(double minPrice, double maxPrice, int sliderStep,
+			int generalAmountOfPages, List<Category> categories,
+			List<String> sortByValues) {
+		super();
+		this.minPrice = minPrice;
+		this.maxPrice = maxPrice;
+		this.sliderStep = sliderStep;
+		this.generalAmountOfPages = generalAmountOfPages;
+		this.categories = categories;
+		this.sortByValues = sortByValues;
 	}
 
 	public double getMinPrice() {
@@ -70,6 +83,14 @@ public class GoodsPageInfo implements Serializable {
 
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
+	}
+
+	public List<String> getSortByValues() {
+		return sortByValues;
+	}
+
+	public void setSortByValues(List<String> sortByValues) {
+		this.sortByValues = sortByValues;
 	}
 
 }
