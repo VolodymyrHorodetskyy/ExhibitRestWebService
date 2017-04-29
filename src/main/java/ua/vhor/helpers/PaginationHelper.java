@@ -1,6 +1,8 @@
-package ua.vhor.utils;
+package ua.vhor.helpers;
 
 import java.util.Optional;
+
+import ua.vhor.utils.ParametersProvider;
 
 public class PaginationHelper {
 

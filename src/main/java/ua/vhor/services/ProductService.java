@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import ua.vhor.db.entity.Product;
 import ua.vhor.entity.Criteria;
+import ua.vhor.helpers.PaginationHelper;
 import ua.vhor.repository.ProductRepository;
 import ua.vhor.specifications.ProductSpecification;
-import ua.vhor.utils.PaginationHelper;
 
 @ComponentScan(basePackages = { "ua.vhor.repository" })
 @Service
