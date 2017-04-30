@@ -11,6 +11,7 @@ public class OrderByHelper {
 			add("Most Popular");
 			add("Highest Price");
 			add("Lowest Price");
+			add("Name");
 		}
 	};
 

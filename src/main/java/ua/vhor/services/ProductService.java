@@ -25,12 +25,29 @@ public class ProductService {
 	private ProductRepository productRepository;
 
 	public List<Product> getProductsAccordingToCriteria(Criteria criteria) {
-		PageRequest pageRequest = new PageRequest(criteria.getPage(),
-				amountOfCards, Sort.Direction.ASC, "name");
+		PageRequest pageRequest = getPageRequestAccordingToCriteria(criteria);
 
 		Page<Product> productsPage = productRepository.findAll(
 				new ProductSpecification(criteria), pageRequest);
 		List<Product> productsList = productsPage.getContent();
 		return productsList;
 	}
+
+	private PageRequest getPageRequestAccordingToCriteria(Criteria criteria) {
+		Sort sort = null;
+		if (criteria.getOrderBy().equalsIgnoreCase("Newest")) {
+			sort = new Sort(Sort.Direction.DESC, "createdDate");
+		} else if (criteria.getOrderBy().equalsIgnoreCase("Highest Price")) {
+			sort = new Sort(Sort.Direction.DESC, "price");
+		} else if (criteria.getOrderBy().equalsIgnoreCase("Lowest Price")) {
+			sort = new Sort(Sort.Direction.ASC, "price");
+		} else if (criteria.getOrderBy().equalsIgnoreCase("Name")) {
+			sort = new Sort(Sort.Direction.ASC, "name");
+		}
+		PageRequest pageRequest = new PageRequest(criteria.getPage(),
+				amountOfCards, sort);
+
+		return pageRequest;
+	}
+
 }

@@ -1,6 +1,7 @@
 package ua.vhor.db.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -42,6 +43,8 @@ public class Product implements Serializable {
 	private Photo additionalPhoto4;
 	@Column(name = "es_pdct_available")
 	private int available;
+	@Column(name = "es_pdct_created_time")
+	private Date createdDate;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "es_pdct_category")
 	private Category category;

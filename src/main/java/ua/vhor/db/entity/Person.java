@@ -39,10 +39,6 @@ public class Person implements Serializable {
 	@OneToMany(mappedBy = "person")
 	Set<PersonInfo> persons;
 
-	/*
-	 * @OneToOne(mappedBy = "person", cascade = CascadeType.ALL) private
-	 * PersonInfo personInfo;
-	 */
 	public int getId() {
 		return id;
 	}
@@ -74,15 +70,5 @@ public class Person implements Serializable {
 	public void setPersons(Set<PersonInfo> persons) {
 		this.persons = persons;
 	}
-
-	/*
-	 * public PersonInfo getPersonInfo() { return personInfo; }
-	 * 
-	 * public void setPersonInfo(PersonInfo personInfo) { this.personInfo =
-	 * personInfo; }
-	 * 
-	 * @Override public String toString() { return "Person [login=" + login +
-	 * ", password=" + password + ", personInfo=" + personInfo + "]"; }
-	 */
 
 }
