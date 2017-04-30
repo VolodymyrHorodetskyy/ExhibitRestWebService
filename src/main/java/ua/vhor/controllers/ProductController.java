@@ -16,7 +16,6 @@ import ua.vhor.helpers.OrderByHelper;
 import ua.vhor.repository.CategoryRepository;
 import ua.vhor.repository.ProductRepository;
 import ua.vhor.services.ProductService;
-import ua.vhor.utils.ParametersProvider;
 
 @RestController
 public class ProductController {
@@ -41,15 +40,15 @@ public class ProductController {
 		Double minPrice = null;
 		Double maxPrice = null;
 		if (criteria.getCategoryId() != 0) {
-			minPrice = productRepository.getLeastPriceByNameAndCategory(
-					criteria.getCategoryId(), criteria.getSearchName());
-			maxPrice = productRepository.getGreatestPriceByNameAndCategory(
-					criteria.getCategoryId(), criteria.getSearchName());
-		} else {
-			minPrice = productRepository.getLeastPriceByNameAndCategory(null,
+			minPrice = productService.getLeastPrice(criteria.getCategoryId(),
 					criteria.getSearchName());
-			maxPrice = productRepository.getGreatestPriceByNameAndCategory(
-					null, criteria.getSearchName());
+			maxPrice = productService.getBiggestPrice(criteria.getCategoryId(),
+					criteria.getSearchName());
+		} else {
+			minPrice = productService.getLeastPrice(null,
+					criteria.getSearchName());
+			maxPrice = productService.getBiggestPrice(null,
+					criteria.getSearchName());
 		}
 		List<Category> categories = categoryRepository.findByAvailable(1);
 		GoodsPageInfo goodsPageInfo = new GoodsPageHelper(minPrice, maxPrice,
@@ -60,10 +59,8 @@ public class ProductController {
 
 	@RequestMapping(value = "/getGoodsInfoForFirstRequest")
 	public GoodsPageInfo getGoodsInfoForFirstRequest() {
-		double minPrice = productRepository.getLeastPriceByNameAndCategory(
-				null, null);
-		double maxPrice = productRepository.getGreatestPriceByNameAndCategory(
-				null, null);
+		double minPrice = productService.getLeastPrice(null, null);
+		double maxPrice = productService.getBiggestPrice(null, null);
 		List<Category> categories = categoryRepository.findByAvailable(1);
 
 		GoodsPageInfo goodsPageInfo = new GoodsPageHelper(minPrice, maxPrice,
