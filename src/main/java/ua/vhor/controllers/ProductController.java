@@ -2,6 +2,7 @@ package ua.vhor.controllers;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,9 @@ import ua.vhor.services.ProductService;
 @RestController
 public class ProductController {
 
+	private final static Logger logger = Logger
+			.getLogger(ProductController.class);
+
 	@Autowired
 	private GoodsPageService goodsPageService;
 	@Autowired
@@ -24,21 +28,43 @@ public class ProductController {
 	@RequestMapping("/getProductsToCriteria")
 	public List<Product> getProductAccordingCriteria(
 			@RequestBody Criteria criteria) {
-		List<Product> products = productService
-				.getProductsAccordingToCriteria(criteria);
+		logger.info("Executing method getProductAccordingCriteria()");
+
+		List<Product> products = null;
+		try {
+			products = productService.getProductsAccordingToCriteria(criteria);
+		} catch (Exception e) {
+			logger.error("Exception in method getProductAccordingCriteria() \n"
+					+ e.getMessage());
+		}
 		return products;
 	}
 
 	@RequestMapping("/getGoodsInfo")
 	public GoodsPageInfo getGoodsInfo(@RequestBody Criteria criteria) {
-		GoodsPageInfo goodsPageInfo = goodsPageService
-				.getGoodsPageInfo(criteria);
+		logger.info("Executing method getGoodsInfo()");
+
+		GoodsPageInfo goodsPageInfo = null;
+		try {
+			goodsPageInfo = goodsPageService.getGoodsPageInfo(criteria);
+		} catch (Exception e) {
+			logger.error("Exception in method getGoodsInfo() \n"
+					+ e.getMessage());
+		}
 		return goodsPageInfo;
 	}
 
 	@RequestMapping(value = "/getGoodsInfoForFirstRequest")
 	public GoodsPageInfo getGoodsInfoForFirstRequest() {
-		GoodsPageInfo goodsPageInfo = goodsPageService.getGoodsPageInfo();
+		logger.info("Executing method getGoodsInfoForFirstRequest()");
+
+		GoodsPageInfo goodsPageInfo = null;
+		try {
+			goodsPageInfo = goodsPageService.getGoodsPageInfo();
+		} catch (Exception e) {
+			logger.error("Exception in method getGoodsInfoForFirstRequest() \n"
+					+ e.getMessage());
+		}
 		return goodsPageInfo;
 	}
 }

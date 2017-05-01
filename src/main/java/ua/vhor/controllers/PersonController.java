@@ -22,7 +22,8 @@ import ua.vhor.repository.PersonRepository;
 @RestController
 public class PersonController {
 
-	final static Logger logger = Logger.getLogger(PersonController.class);
+	private final static Logger logger = Logger
+			.getLogger(PersonController.class);
 
 	@Autowired
 	PersonRepository personRepository;
