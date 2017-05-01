@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import ua.vhor.db.entity.Category;
 import ua.vhor.db.entity.Product;
+import ua.vhor.db.entity.Product_;
 import ua.vhor.entity.Criteria;
 
 public class ProductSpecification implements Specification<Product> {
@@ -30,7 +31,7 @@ public class ProductSpecification implements Specification<Product> {
 		String searchName = criteria.getSearchName();
 		if (StringUtils.isNotBlank(searchName)
 				&& StringUtils.isNotEmpty(searchName)) {
-			Predicate namePredicate = cb.like(root.<String> get("name"),
+			Predicate namePredicate = cb.like(root.get(Product_.name),
 					String.format("%s" + searchName + "%s", "%", "%"));
 			listOfPredicates.add(namePredicate);
 		}
@@ -38,18 +39,16 @@ public class ProductSpecification implements Specification<Product> {
 		if (criteria.getCategoryId() != 0) {
 			Category category = new Category();
 			category.setId(criteria.getCategoryId());
-			Predicate categoryPredicate = cb.equal(
-					root.<String> get("category"), category);
+			Predicate categoryPredicate = cb.equal(root.get(Product_.category),
+					category);
 			listOfPredicates.add(categoryPredicate);
 		}
 
 		if (!criteria.getAction().equalsIgnoreCase("category")) {
 			Predicate minPricePredicate = cb.greaterThanOrEqualTo(
-					root.<String> get("price"),
-					String.valueOf(criteria.getMinPrice()));
+					root.get(Product_.price), criteria.getMinPrice());
 			Predicate maxPricePredicate = cb.lessThanOrEqualTo(
-					root.<String> get("price"),
-					String.valueOf(criteria.getMaxPrice()));
+					root.get(Product_.price), criteria.getMaxPrice());
 			listOfPredicates.add(minPricePredicate);
 			listOfPredicates.add(maxPricePredicate);
 		}
