@@ -23,15 +23,7 @@ public class GoodsPageInfo implements Serializable {
 		super();
 	}
 
-	public GoodsPageInfo(double minPrice, double maxPrice, int sliderStep,
-			int generalAmountOfPages, List<Category> categories) {
-		super();
-		this.minPrice = minPrice;
-		this.maxPrice = maxPrice;
-		this.sliderStep = sliderStep;
-		this.generalAmountOfPages = generalAmountOfPages;
-		this.categories = categories;
-	}
+
 
 	public GoodsPageInfo(double minPrice, double maxPrice, int sliderStep,
 			int generalAmountOfPages, List<Category> categories,
