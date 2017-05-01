@@ -44,7 +44,7 @@ public class ProductSpecification implements Specification<Product> {
 			listOfPredicates.add(categoryPredicate);
 		}
 
-		if (!criteria.getAction().equalsIgnoreCase("category")) {
+		if (!criteria.getAction().equalsIgnoreCase("category") && StringUtils.isNotBlank(searchName)) {
 			Predicate minPricePredicate = cb.greaterThanOrEqualTo(
 					root.get(Product_.price), criteria.getMinPrice());
 			Predicate maxPricePredicate = cb.lessThanOrEqualTo(
