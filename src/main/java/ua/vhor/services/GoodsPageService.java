@@ -26,6 +26,8 @@ public class GoodsPageService {
 	private CategoryRepository categoryRepository;
 
 	private final int sliderStep = 1;
+	private final double defaultMinPrice = 0;
+	private final double defaultMaxPrice = 0;
 
 	public GoodsPageService() {
 	}
@@ -35,9 +37,12 @@ public class GoodsPageService {
 		Page<Product> productsPage = productRepository.findAll(
 				new MinMaxPriceSpecification(categoryId, searchName),
 				pageRequest);
-		Double leastPrice = productsPage.getContent().get(0).getPrice();
-
-		return leastPrice;
+		if (null != productsPage.getContent()
+				&& productsPage.getContent().size() > 0) {
+			Product product = productsPage.getContent().get(0);
+			return product.getPrice();
+		}
+		return defaultMinPrice;
 	}
 
 	private Double getBiggestPrice(Integer categoryId, String searchName) {
@@ -45,9 +50,12 @@ public class GoodsPageService {
 		Page<Product> productsPage = productRepository.findAll(
 				new MinMaxPriceSpecification(categoryId, searchName),
 				pageRequest);
-		Double biggestPrice = productsPage.getContent().get(0).getPrice();
-
-		return biggestPrice;
+		if (null != productsPage.getContent()
+				&& productsPage.getContent().size() > 0) {
+			Product product = productsPage.getContent().get(0);
+			return product.getPrice();
+		}
+		return defaultMaxPrice;
 	}
 
 	private Double getBiggestPrice() {
