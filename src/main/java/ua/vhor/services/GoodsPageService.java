@@ -13,9 +13,11 @@ import ua.vhor.db.entity.Product;
 import ua.vhor.entity.Criteria;
 import ua.vhor.entity.GoodsPageInfo;
 import ua.vhor.helpers.OrderByHelper;
+import ua.vhor.helpers.PaginationHelper;
 import ua.vhor.repository.CategoryRepository;
 import ua.vhor.repository.ProductRepository;
 import ua.vhor.specifications.MinMaxPriceSpecification;
+import ua.vhor.specifications.ProductSpecification;
 
 @Service
 public class GoodsPageService {
@@ -66,12 +68,25 @@ public class GoodsPageService {
 		return biggestPrice;
 	}
 
+	private Integer getAmountOfPages(Criteria criteria) {
+		Integer amount = (int) Math.ceil((double) productRepository
+				.countBy(new ProductSpecification(criteria))
+				/ PaginationHelper.getAmountOfCardsOnPage());
+		return amount;
+	}
+
+	private Integer getAmountOfPages() {
+		Integer amount = (int) Math.ceil((double) productRepository
+				.countByAvailable(1)
+				/ PaginationHelper.getAmountOfCardsOnPage());
+		return amount;
+	}
+
 	private Double getLeastPrice() {
 		PageRequest pageRequest = new PageRequest(0, 1, Direction.ASC, "price");
 		Page<Product> productsPage = productRepository.findAll(
 				new MinMaxPriceSpecification(null, null), pageRequest);
 		Double leastPrice = productsPage.getContent().get(0).getPrice();
-
 		return leastPrice;
 	}
 
@@ -80,19 +95,22 @@ public class GoodsPageService {
 				criteria.getSearchName());
 		double maxPrice = getBiggestPrice(criteria.getCategoryId(),
 				criteria.getSearchName());
-
+		int amountOfPages = getAmountOfPages(criteria);
 		List<Category> categories = categoryRepository.findByAvailable(1);
 		GoodsPageInfo goodsPageInfo = new GoodsPageInfo(minPrice, maxPrice,
-				sliderStep, 1, categories, OrderByHelper.LIST_ORDER_BY);
+				sliderStep, amountOfPages, categories,
+				OrderByHelper.LIST_ORDER_BY);
 		return goodsPageInfo;
 	}
 
 	public GoodsPageInfo getGoodsPageInfo() {
 		double minPrice = getLeastPrice();
 		double maxPrice = getBiggestPrice();
+		int amountOfPages = getAmountOfPages();
 		List<Category> categories = categoryRepository.findByAvailable(1);
 		GoodsPageInfo goodsPageInfo = new GoodsPageInfo(minPrice, maxPrice,
-				sliderStep, 1, categories, OrderByHelper.LIST_ORDER_BY);
+				sliderStep, amountOfPages, categories,
+				OrderByHelper.LIST_ORDER_BY);
 		return goodsPageInfo;
 	}
 

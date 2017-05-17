@@ -15,4 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, String>,
 
 	public Page<Product> findAll(Specification spec, Pageable pageable);
 
+	public Integer countBy(Specification spec);
+
+	public Integer countByAvailable(int available);
 }

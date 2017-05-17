@@ -9,7 +9,7 @@ public class PaginationHelper {
 	private static final int DEFAULT_SIZE = 9;
 	private static final String PROPERTY_NAME = "pagination.amountcardsonpage";
 
-	public static int getAmountOfPages() {
+	public static int getAmountOfCardsOnPage() {
 		Optional<String> optionalValue = Optional.ofNullable(ParametersProvider
 				.getProperty(PROPERTY_NAME));
 		if (optionalValue.isPresent()) {

@@ -2,11 +2,10 @@ package ua.vhor.db.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 
 import javax.persistence.*;
 
-import org.springframework.data.domain.Sort.Direction;
+
 
 @Entity
 @Table(name = "es_product")

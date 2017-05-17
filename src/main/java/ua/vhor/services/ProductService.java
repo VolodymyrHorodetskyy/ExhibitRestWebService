@@ -17,7 +17,7 @@ import ua.vhor.specifications.ProductSpecification;
 @Service
 public class ProductService {
 
-	private final int amountOfCards = PaginationHelper.getAmountOfPages();
+	private final int amountOfCards = PaginationHelper.getAmountOfCardsOnPage();
 
 	@Autowired
 	private ProductRepository productRepository;

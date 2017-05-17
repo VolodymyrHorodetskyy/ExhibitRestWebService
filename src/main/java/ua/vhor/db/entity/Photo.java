@@ -12,10 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="es_photo")
-public class Photo implements Serializable{
+@Table(name = "es_photo")
+public class Photo implements Serializable {
 
 	/**
 	 * 
@@ -23,21 +22,30 @@ public class Photo implements Serializable{
 	private static final long serialVersionUID = 3224341837391212280L;
 	@Id
 	@GeneratedValue
-	@Column(name="es_phto_id")
+	@Column(name = "es_phto_id")
 	private int id;
-	@Column(name="es_phto_reference")
+	@Column(name = "es_phto_reference")
 	private String reference;
-	@Column(name="es_phto_description")
+	@Column(name = "es_phto_description")
 	private String description;
-	
+	@Column(name = "es_phto_server")
+	private int isOnServer;
+
 	public Photo() {
-		
+
 	}
-	
+
 	public Photo(String reference, String description) {
 		super();
 		this.reference = reference;
 		this.description = description;
+	}
+
+	public Photo(String reference, String description, int isOnServer) {
+		super();
+		this.reference = reference;
+		this.description = description;
+		this.isOnServer = isOnServer;
 	}
 
 	public String getReference() {
@@ -54,6 +62,14 @@ public class Photo implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getIsOnServer() {
+		return isOnServer;
+	}
+
+	public void setIsOnServer(int isOnServer) {
+		this.isOnServer = isOnServer;
 	}
 
 }
