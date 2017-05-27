@@ -25,12 +25,12 @@ public class ProductSpecification implements Specification<Product> {
 		this.criteria = criteria;
 	}
 
-	private Predicate[] formPredicatesArray(Root<Product> root,
-			CriteriaQuery<?> query, CriteriaBuilder cb) {
+	private Predicate[] formPredicatesArray(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		List<Predicate> listOfPredicates = new ArrayList<Predicate>();
 		String searchName = criteria.getSearchName();
-		if (StringUtils.isNotBlank(searchName)
-				&& StringUtils.isNotEmpty(searchName)) {
+		Predicate availabilityPredicate = cb.equal(root.get(Product_.available), 1);
+		listOfPredicates.add(availabilityPredicate);
+		if (StringUtils.isNotBlank(searchName) && StringUtils.isNotEmpty(searchName)) {
 			Predicate namePredicate = cb.like(root.get(Product_.name),
 					String.format("%s" + searchName + "%s", "%", "%"));
 			listOfPredicates.add(namePredicate);
@@ -39,16 +39,13 @@ public class ProductSpecification implements Specification<Product> {
 		if (criteria.getCategoryId() != 0) {
 			Category category = new Category();
 			category.setId(criteria.getCategoryId());
-			Predicate categoryPredicate = cb.equal(root.get(Product_.category),
-					category);
+			Predicate categoryPredicate = cb.equal(root.get(Product_.category), category);
 			listOfPredicates.add(categoryPredicate);
 		}
 
 		if (!criteria.getAction().equalsIgnoreCase("category") && StringUtils.isNotBlank(searchName)) {
-			Predicate minPricePredicate = cb.greaterThanOrEqualTo(
-					root.get(Product_.price), criteria.getMinPrice());
-			Predicate maxPricePredicate = cb.lessThanOrEqualTo(
-					root.get(Product_.price), criteria.getMaxPrice());
+			Predicate minPricePredicate = cb.greaterThanOrEqualTo(root.get(Product_.price), criteria.getMinPrice());
+			Predicate maxPricePredicate = cb.lessThanOrEqualTo(root.get(Product_.price), criteria.getMaxPrice());
 			listOfPredicates.add(minPricePredicate);
 			listOfPredicates.add(maxPricePredicate);
 		}
@@ -57,8 +54,7 @@ public class ProductSpecification implements Specification<Product> {
 	}
 
 	@Override
-	public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query,
-			CriteriaBuilder cb) {
+	public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		Predicate[] predicates = formPredicatesArray(root, query, cb);
 		return cb.and(predicates);
 	}
