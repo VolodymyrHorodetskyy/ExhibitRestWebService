@@ -90,8 +90,8 @@ public class GoodsPageService {
 		int amountOfItems = productRepository.countBy(minPrice, maxPrice, category, criteria.getSearchName());
 		int amountOfPages = getAmountOfPages(amountOfItems);
 		List<Category> categories = categoryRepository.findByAvailable(1);
-		GoodsPageInfo goodsPageInfo = new GoodsPageInfo(minPrice, maxPrice, sliderStep, amountOfPages, categories,
-				OrderByHelper.LIST_ORDER_BY);
+		GoodsPageInfo goodsPageInfo = new GoodsPageInfo(minPrice, maxPrice, sliderStep, amountOfPages,
+				criteria.getPage(), categories, OrderByHelper.LIST_ORDER_BY);
 		return goodsPageInfo;
 	}
 
@@ -100,7 +100,7 @@ public class GoodsPageService {
 		double maxPrice = getBiggestPrice();
 		int amountOfPages = getAmountOfPages();
 		List<Category> categories = categoryRepository.findByAvailable(1);
-		GoodsPageInfo goodsPageInfo = new GoodsPageInfo(minPrice, maxPrice, sliderStep, amountOfPages, categories,
+		GoodsPageInfo goodsPageInfo = new GoodsPageInfo(minPrice, maxPrice, sliderStep, amountOfPages, 1, categories,
 				OrderByHelper.LIST_ORDER_BY);
 		return goodsPageInfo;
 	}

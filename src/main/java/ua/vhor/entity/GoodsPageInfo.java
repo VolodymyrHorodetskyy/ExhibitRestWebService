@@ -16,6 +16,7 @@ public class GoodsPageInfo implements Serializable {
 	private double maxPrice;
 	private int sliderStep;
 	private int generalAmountOfPages;
+	private int currentPage;
 	private List<Category> categories;
 	private List<String> sortByValues;
 
@@ -23,16 +24,14 @@ public class GoodsPageInfo implements Serializable {
 		super();
 	}
 
-
-
-	public GoodsPageInfo(double minPrice, double maxPrice, int sliderStep,
-			int generalAmountOfPages, List<Category> categories,
-			List<String> sortByValues) {
+	public GoodsPageInfo(double minPrice, double maxPrice, int sliderStep, int generalAmountOfPages, int currentPage,
+			List<Category> categories, List<String> sortByValues) {
 		super();
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 		this.sliderStep = sliderStep;
 		this.generalAmountOfPages = generalAmountOfPages;
+		this.currentPage = currentPage;
 		this.categories = categories;
 		this.sortByValues = sortByValues;
 	}
@@ -83,6 +82,14 @@ public class GoodsPageInfo implements Serializable {
 
 	public void setSortByValues(List<String> sortByValues) {
 		this.sortByValues = sortByValues;
+	}
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 
 }
