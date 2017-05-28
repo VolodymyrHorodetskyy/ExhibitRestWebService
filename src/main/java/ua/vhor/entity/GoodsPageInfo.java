@@ -14,27 +14,13 @@ public class GoodsPageInfo implements Serializable {
 
 	private double minPrice;
 	private double maxPrice;
+	private Double currentMinPrice;
+	private Double currentMaxPrice;
 	private int sliderStep;
 	private int generalAmountOfPages;
 	private int currentPage;
 	private List<Category> categories;
 	private List<String> sortByValues;
-
-	public GoodsPageInfo() {
-		super();
-	}
-
-	public GoodsPageInfo(double minPrice, double maxPrice, int sliderStep, int generalAmountOfPages, int currentPage,
-			List<Category> categories, List<String> sortByValues) {
-		super();
-		this.minPrice = minPrice;
-		this.maxPrice = maxPrice;
-		this.sliderStep = sliderStep;
-		this.generalAmountOfPages = generalAmountOfPages;
-		this.currentPage = currentPage;
-		this.categories = categories;
-		this.sortByValues = sortByValues;
-	}
 
 	public double getMinPrice() {
 		return minPrice;
@@ -50,6 +36,22 @@ public class GoodsPageInfo implements Serializable {
 
 	public void setMaxPrice(double maxPrice) {
 		this.maxPrice = maxPrice;
+	}
+
+	public Double getCurrentMinPrice() {
+		return currentMinPrice;
+	}
+
+	public void setCurrentMinPrice(Double currentMinPrice) {
+		this.currentMinPrice = currentMinPrice;
+	}
+
+	public Double getCurrentMaxPrice() {
+		return currentMaxPrice;
+	}
+
+	public void setCurrentMaxPrice(Double currentMaxPrice) {
+		this.currentMaxPrice = currentMaxPrice;
 	}
 
 	public int getSliderStep() {
@@ -68,6 +70,14 @@ public class GoodsPageInfo implements Serializable {
 		this.generalAmountOfPages = generalAmountOfPages;
 	}
 
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
 	public List<Category> getCategories() {
 		return categories;
 	}
@@ -84,12 +94,58 @@ public class GoodsPageInfo implements Serializable {
 		this.sortByValues = sortByValues;
 	}
 
-	public int getCurrentPage() {
-		return currentPage;
+	public GoodsPageInfo() {
+		super();
 	}
 
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
+	private GoodsPageInfo(GoodsPageInfoBuilder builder) {
+		this.minPrice = builder.minPrice;
+		this.maxPrice = builder.maxPrice;
+		this.currentMinPrice = builder.currentMinPrice;
+		this.currentMaxPrice = builder.currentMaxPrice;
+		this.sliderStep = builder.sliderStep;
+		this.generalAmountOfPages = builder.generalAmountOfPages;
+		this.currentPage = builder.currentPage;
+		this.categories = builder.categories;
+		this.sortByValues = builder.sortByValues;
+	}
+
+	public static class GoodsPageInfoBuilder {
+		private double minPrice;
+		private double maxPrice;
+		private Double currentMinPrice;
+		private Double currentMaxPrice;
+		private int sliderStep;
+		private int generalAmountOfPages;
+		private int currentPage;
+		private List<Category> categories;
+		private List<String> sortByValues;
+
+		public GoodsPageInfoBuilder(double minPrice, double maxPrice, int sliderStep, int generalAmountOfPages,
+				int currentPage, List<Category> categories, List<String> sortByValues) {
+			this.minPrice = minPrice;
+			this.maxPrice = maxPrice;
+			this.sliderStep = sliderStep;
+			this.generalAmountOfPages = generalAmountOfPages;
+			this.currentPage = currentPage;
+			this.categories = categories;
+			this.sortByValues = sortByValues;
+		}
+
+		public GoodsPageInfoBuilder setCurrentMinPrice(Double currentMinPrice) {
+			this.currentMinPrice = currentMinPrice;
+			return this;
+		}
+
+		public GoodsPageInfoBuilder setCurrentMaxPrice(Double currentMaxPrice) {
+			this.currentMaxPrice = currentMaxPrice;
+			return this;
+		}
+
+		public GoodsPageInfo build() {
+			return new GoodsPageInfo(this);
+		}
+
 	}
 
 }

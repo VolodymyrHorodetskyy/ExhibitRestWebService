@@ -83,15 +83,22 @@ public class GoodsPageService {
 	public GoodsPageInfo getGoodsPageInfo(Criteria criteria) {
 		double minPrice = getLeastPrice(criteria.getCategoryId(), criteria.getSearchName());
 		double maxPrice = getBiggestPrice(criteria.getCategoryId(), criteria.getSearchName());
+		Double currentMinPrice = null;
+		Double currentMaxPrice = null;
+		if (!criteria.getAction().equalsIgnoreCase("category")) {
+			currentMinPrice = criteria.getMinPrice();
+			currentMaxPrice = criteria.getMaxPrice();
+		}
 		Integer category = null;
 		if (criteria.getCategoryId() != 0) {
 			category = criteria.getCategoryId();
 		}
-		int amountOfItems = productRepository.countBy(minPrice, maxPrice, category, criteria.getSearchName());
+		int amountOfItems = productRepository.countBy(currentMinPrice, currentMaxPrice, category, criteria.getSearchName());
 		int amountOfPages = getAmountOfPages(amountOfItems);
 		List<Category> categories = categoryRepository.findByAvailable(1);
-		GoodsPageInfo goodsPageInfo = new GoodsPageInfo(minPrice, maxPrice, sliderStep, amountOfPages,
-				criteria.getPage(), categories, OrderByHelper.LIST_ORDER_BY);
+		GoodsPageInfo goodsPageInfo = new GoodsPageInfo.GoodsPageInfoBuilder(minPrice, maxPrice, sliderStep,
+				amountOfPages, criteria.getPage(), categories, OrderByHelper.LIST_ORDER_BY)
+						.setCurrentMinPrice(currentMinPrice).setCurrentMaxPrice(currentMaxPrice).build();
 		return goodsPageInfo;
 	}
 
@@ -100,8 +107,8 @@ public class GoodsPageService {
 		double maxPrice = getBiggestPrice();
 		int amountOfPages = getAmountOfPages();
 		List<Category> categories = categoryRepository.findByAvailable(1);
-		GoodsPageInfo goodsPageInfo = new GoodsPageInfo(minPrice, maxPrice, sliderStep, amountOfPages, 1, categories,
-				OrderByHelper.LIST_ORDER_BY);
+		GoodsPageInfo goodsPageInfo = new GoodsPageInfo.GoodsPageInfoBuilder(minPrice, maxPrice, sliderStep,
+				amountOfPages, 1, categories, OrderByHelper.LIST_ORDER_BY).build();
 		return goodsPageInfo;
 	}
 
