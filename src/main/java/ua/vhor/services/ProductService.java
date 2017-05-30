@@ -41,7 +41,11 @@ public class ProductService {
 		} else if (criteria.getOrderBy().equalsIgnoreCase("Name")) {
 			sort = new Sort(Sort.Direction.ASC, "name");
 		}
-		PageRequest pageRequest = new PageRequest(criteria.getPage() - 1, amountOfCards, sort);
+		int page = criteria.getPage();
+		if(page == 0){
+			page = 1;
+		}
+		PageRequest pageRequest = new PageRequest(page - 1, amountOfCards, sort);
 
 		return pageRequest;
 	}

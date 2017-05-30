@@ -99,7 +99,7 @@ public class GoodsPageService {
 				criteria.getSearchName());
 		int amountOfPages = getAmountOfPages(amountOfItems);
 
-		if (currentPage == 0 || currentPage >= amountOfPages) {
+		if (currentPage == 0 || currentPage > amountOfPages) {
 			currentPage = 1;
 		}
 		List<Category> categories = categoryRepository.findByAvailable(1);
